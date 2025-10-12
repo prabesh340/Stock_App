@@ -4,8 +4,12 @@ import FotterLink from "@/components/forms/FooterLink";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { signInWithEmail } from "@/lib/actions/auth.actions";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const SignIn = () => {
+  const router  = useRouter();
   const {
     register,
     handleSubmit,
@@ -20,9 +24,13 @@ const SignIn = () => {
 
   const onsubmit = async (data: SignInFormData) => {
     try {
-      console.log(data);
+      const result = await signInWithEmail(data);
+      if(result.success) router.push('/')
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast.error('Sign In failed',{
+        description:error instanceof Error?error.message:'failed to sign in'
+      })
     }
   };
 
