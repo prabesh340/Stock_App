@@ -13,17 +13,16 @@ import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { LogOut } from "lucide-react";
 import NavIteams from "./NavIteams";
+import { signOut } from "@/lib/actions/auth.actions";
 
-const UserDropdown = () => {
+const UserDropdown = ({user}:{user:User}) => {
   const router = useRouter();
 
   const handleSignOut = async () => {
+    await signOut();
     router.push("/sign-in");
   };
-  const user = {
-    name: "Prabesh Panta",
-    email: "prabeshdesktop@gmail.com",
-  };
+ 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,12 +33,12 @@ const UserDropdown = () => {
         >
           <Avatar className="h-8 w-8 ">
             <AvatarImage src="https://avatars.githubusercontent.com/u/188599940?s=400&u=58b54c67880f8325c7933a6318610389c23f7e9e&v=4" />
-            <AvatarFallback className="bg-yellow-500 text-yellow-900 text-sm font-bold">
+            <AvatarFallback className="bg-yellow-500 text-yellow-900 text-sm font-bold capitalize">
               {user.name[0]}
             </AvatarFallback>
           </Avatar>
           <div className="hidden md:flex flex-col items-start">
-            <span className="text-base font-medium text-gray-400">
+            <span className="text-base font-medium text-gray-400 capitalize">
               {user.name.split(" ")[0]}
             </span>
           </div>
